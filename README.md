@@ -26,6 +26,6 @@ A modern, responsive web application built with React and Tailwind CSS that allo
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/currency-converter.git
+   git clone https://github.com/maurya-arjun/currency-converter.git
    cd currency-converter
    ```
