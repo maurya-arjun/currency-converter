@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 const App = () => {
   const [amount, setAmount] = useState("");
-  const [fromCurrency, setFromCurrency] = useState("USD");
-  const [toCurrency, setToCurrency] = useState("EUR");
+  const [fromCurrency, setFromCurrency] = useState("");
+  const [toCurrency, setToCurrency] = useState("");
   const [convertedAmount, setConvertedAmount] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currencySymbol, setCurrencySymbol] = useState([]);
 
+  // Effect to perform the conversion
   useEffect(
     function () {
       async function getConvertedCurrency() {
@@ -46,6 +47,7 @@ const App = () => {
     [fromCurrency, toCurrency, amount]
   );
 
+  // Effect to get the currency code and name
   useEffect(function () {
     async function getCurrencies() {
       try {
@@ -63,6 +65,14 @@ const App = () => {
     }
     getCurrencies();
   }, []);
+
+  useEffect(
+    function () {
+      if (!fromCurrency || !toCurrency) return;
+      document.title = `Currency ${fromCurrency} - ${toCurrency}`;
+    },
+    [fromCurrency, toCurrency]
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex items-center justify-center p-4">
@@ -84,6 +94,7 @@ const App = () => {
             disabled={isLoading}
             className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 disabled:bg-gray-100"
           >
+            <option value="">Select currency</option>
             {currencySymbol?.map(([code, name]) => (
               <CurrencyOption key={code} value={code} name={name} />
             ))}
@@ -94,6 +105,7 @@ const App = () => {
             disabled={isLoading}
             className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 disabled:bg-gray-100"
           >
+            <option value="">Select currency</option>
             {currencySymbol?.map(([code, name]) => (
               <CurrencyOption key={code} value={code} name={name} />
             ))}
