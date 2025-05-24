@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import CustomDropdown from "./CustomDropdown";
 
 const App = () => {
-  const [amount, setAmount] = useState("");
-  const [fromCurrency, setFromCurrency] = useState("");
-  const [toCurrency, setToCurrency] = useState("");
+  const [amount, setAmount] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("INR");
   const [convertedAmount, setConvertedAmount] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +81,7 @@ const App = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Currency Converter
         </h1>
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex flex-col lg:flex-row gap-4 mb-6">
           <input
             type="number"
             placeholder="Enter amount"
@@ -88,28 +89,20 @@ const App = () => {
             onChange={(e) => setAmount(e.target.value)}
             className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
           />
-          <select
+          <CustomDropdown
             value={fromCurrency}
-            onChange={(e) => setFromCurrency(e.target.value)}
+            onChange={setFromCurrency}
+            options={currencySymbol}
             disabled={isLoading}
-            className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 disabled:bg-gray-100"
-          >
-            <option value="">Select currency</option>
-            {currencySymbol?.map(([code, name]) => (
-              <CurrencyOption key={code} value={code} name={name} />
-            ))}
-          </select>
-          <select
+            placeholder="Select source currency"
+          />
+          <CustomDropdown
             value={toCurrency}
-            onChange={(e) => setToCurrency(e.target.value)}
+            onChange={setToCurrency}
+            options={currencySymbol}
             disabled={isLoading}
-            className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 disabled:bg-gray-100"
-          >
-            <option value="">Select currency</option>
-            {currencySymbol?.map(([code, name]) => (
-              <CurrencyOption key={code} value={code} name={name} />
-            ))}
-          </select>
+            placeholder="Select target currency"
+          />
         </div>
         <div className="text-center">
           {isLoading && (
@@ -128,14 +121,5 @@ const App = () => {
     </div>
   );
 };
-
-function CurrencyOption({ value, name }) {
-  return (
-    <option value={value}>
-      {" "}
-      {name} - ({value}){" "}
-    </option>
-  );
-}
 
 export default App;
