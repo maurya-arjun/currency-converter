@@ -113,7 +113,7 @@ const App = () => {
         </div>
         <div className="text-center">
           {isLoading && (
-            <p className="text-blue-600 font-medium animate-pulse">
+            <p className="text-blue-600 text-2xl font-medium animate-pulse">
               Converting...
             </p>
           )}
